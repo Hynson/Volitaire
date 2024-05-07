@@ -496,8 +496,85 @@ class FixedArrayBullet extends Phaser.Scene {
                     this.my.sprite.doublegrunt.visible = true;
                 }, this);
         
+            } else if (this.collides(my.sprite.grunt, dbgbullet)) {
+                // start animation
+                this.puff = this.add.sprite(my.sprite.grunt.x, my.sprite.grunt.y, "whitePuff03").setScale(0.25).play("puff");
+                for(let gbullet of my.sprite.gruntBullet){
+                        gbullet.x = my.sprite.grunt.x;
+                        gbullet.y = my.sprite.grunt.y;
+                        gbullet.visible = true;
+                }
+                // clear out bullet -- put y offscreen, will get reaped next update
+                dbgbullet.y = -100;
+                my.sprite.grunt.visible = false;
+                my.sprite.grunt.x = -100;
+                this.puff.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                    this.my.sprite.grunt.x = Math.random()*config.width;
+                    this.my.sprite.grunt.y = 40;
+                    this.my.sprite.grunt.visible = true;
+                }, this);
+        
+            } else if (this.collides(my.sprite.triplegrunt, dbgbullet)) {
+                // start animation
+                this.puff = this.add.sprite(my.sprite.triplegrunt.x, my.sprite.triplegrunt.y, "whitePuff03").setScale(0.25).play("puff");
+                for(let tribullet of my.sprite.tripleGruntBullet){
+                    for (let i=0; i < 5; i++) {
+                        tribullet.x = my.sprite.triplegrunt.x;
+                        tribullet.y = my.sprite.triplegrunt.y;
+                        my.sprite.tripleGruntBullet[0].visible = true;
+                    if (i == 1){
+                        my.sprite.tripleGruntBullet[1].x = tribullet.x - 30;
+                        my.sprite.tripleGruntBullet[1].y = tribullet.y
+                        my.sprite.tripleGruntBullet[1].visible = true;
+                    }
+                    if (i == 2){
+                        my.sprite.tripleGruntBullet[2].x = tribullet.x + 30;
+                        my.sprite.tripleGruntBullet[2].y = tribullet.y;
+                        my.sprite.tripleGruntBullet[2].visible = true;
+                    }
+
+            } 
+        }
+        } else if (this.collides(my.sprite.bomber, dbgbullet)) {
+            // start animation
+            this.puff = this.add.sprite(my.sprite.bomber.x, my.sprite.bomber.y, "whitePuff03").setScale(0.25).play("puff");
+            for(let bbullet of my.sprite.bomberBullet){
+                for (let i=0; i < 5; i++) {
+                    bbullet.x = my.sprite.bomber.x;
+                    bbullet.y = my.sprite.bomber.y;
+                if (i == 1){
+                    my.sprite.bomberBullet[1].x = bbullet.x - 30;
+                    my.sprite.bomberBullet[1].y = bbullet.y - 50;
+                    my.sprite.bomberBullet[1].visible = true;
+                }
+                if (i == 2){
+                    my.sprite.bomberBullet[2].x = bbullet.x - 60;
+                    my.sprite.bomberBullet[2].y = bbullet.y;
+                    my.sprite.bomberBullet[2].visible = true;
+                }
+                if (i == 3){
+                    my.sprite.bomberBullet[3].x = bbullet.x + 30;
+                    my.sprite.bomberBullet[3].y = bbullet.y - 50;
+                    my.sprite.bomberBullet[3].visible = true;
+                }
+                if (i == 4){
+                    my.sprite.bomberBullet[4].x = bbullet.x + 60;
+                    my.sprite.bomberBullet[4].y = bbullet.y;
+                    my.sprite.bomberBullet[4].visible = true;
+                }
             }
         }
+            // clear out bullet -- put y offscreen, will get reaped next update
+            dbgbullet.y = -100;
+            my.sprite.bombergrunt.visible = false;
+            my.sprite.bombergrunt.x = -100;
+            this.puff.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                this.my.sprite.bombergrunt.x = Math.random()*config.width;
+                this.my.sprite.bombergrunt.y = 40;
+                this.my.sprite.bombergrunt.visible = true;
+            }, this);
+    }
+    }
 
         // Check for collision with the triple grunt
         for (let bullet of my.sprite.bullet) {
@@ -524,6 +601,42 @@ class FixedArrayBullet extends Phaser.Scene {
         }
                 // clear out bullet -- put y offscreen, will get reaped next update
                 bullet.y = -100;
+                my.sprite.triplegrunt.visible = false;
+                my.sprite.triplegrunt.x = -100;
+                this.puff.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                    this.my.sprite.triplegrunt.x = Math.random()*config.width;
+                    this.my.sprite.triplegrunt.y = 40;
+                    this.my.sprite.triplegrunt.visible = true;
+                }, this);
+        
+            }
+        }
+
+        // Check for collateral collision with the triple grunt
+        for (let tribullet of my.sprite.tripleGruntBullet) {
+            if (this.collides(my.sprite.triplegrunt, tribullet)) {
+                // start animation
+                this.puff = this.add.sprite(my.sprite.triplegrunt.x, my.sprite.triplegrunt.y, "whitePuff03").setScale(0.25).play("puff");
+                for(let tribullet of my.sprite.tripleGruntBullet){
+                    for (let i=0; i < 5; i++) {
+                        tribullet.x = my.sprite.triplegrunt.x;
+                        tribullet.y = my.sprite.triplegrunt.y;
+                        my.sprite.tripleGruntBullet[0].visible = true;
+                    if (i == 1){
+                        my.sprite.tripleGruntBullet[1].x = tribullet.x - 30;
+                        my.sprite.tripleGruntBullet[1].y = tribullet.y
+                        my.sprite.tripleGruntBullet[1].visible = true;
+                    }
+                    if (i == 2){
+                        my.sprite.tripleGruntBullet[2].x = tribullet.x + 30;
+                        my.sprite.tripleGruntBullet[2].y = tribullet.y;
+                        my.sprite.tripleGruntBullet[2].visible = true;
+                    }
+
+            }
+        }
+                // clear out bullet -- put y offscreen, will get reaped next update
+                tribullet.y = -100;
                 my.sprite.triplegrunt.visible = false;
                 my.sprite.triplegrunt.x = -100;
                 this.puff.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
