@@ -15,7 +15,7 @@ class VolitaireGame extends Phaser.Scene {
         this.my.sprite.doubleGruntBullet = []; 
         this.my.sprite.tripleGruntBullet = []; 
         this.my.sprite.bomberBullet = [];  
-        this.lives = 3;
+        this.lives = 2;
         this.maxLives = 9;
         this.myScore = 0;
         this.displayScore = 0;
